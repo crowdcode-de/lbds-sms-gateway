@@ -5,6 +5,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 
 public class HelloSMS {
+
     public static void print() {
         System.out.println("Hello, World !!!");
 

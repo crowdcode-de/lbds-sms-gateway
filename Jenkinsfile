@@ -30,13 +30,9 @@ pipeline {
                         pom = readMavenPom file: 'pom.xml'
                         final newVersion = pom.version
 
-                        aarPom = readMavenPom file: 'pom-aar.xml'
-                        final orginalAarVersion = aarPom.version
-                        mvn("-DfailOnMissingBranchId=false -DpomFile=pom-aar.xml -Dnamespace=org.hzi -DbranchName=${env.BRANCH_NAME} -Dgituser=${gituser} -Dgitpassword=${gitPwd} io.crowdcode:bgav-maven-plugin:1.1.0:bgav")
-                        aarPom = readMavenPom file: 'pom-aar.xml'
-                        final newAarVersion = aarPom.version
 
-                        if (!orginalVersion.equals(newVersion) || !orginalAarVersion.equals(newAarVersion)) {
+
+                        if (!orginalVersion.equals(newVersion)) {
                             sh "mkdir -p target && touch target/DO_NOT_BUILD"
                             env.DO_NOT_BUILD=true
                         } else {
