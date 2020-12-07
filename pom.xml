@@ -4,14 +4,60 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.example</groupId>
+    <groupId>org.hzi.sormas.lbds</groupId>
     <artifactId>lbds-sms-gateway</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.lang.level>8</java.lang.level>
     </properties>
+
+    <organization>
+        <name>Helmholtz Zentrum für Infektionsforschung</name>
+        <url>https://www.helmholtz-hzi.de//</url>
+    </organization>
+
+    <developers>
+        <developer>
+            <name>Heiko Beineke</name>
+            <email>heiko.beineke@crowdcode.io</email>
+            <organization>CROWDCODE GmbH + Co. KG</organization>
+            <organizationUrl>https://www.crowdcode.io</organizationUrl>
+        </developer>
+        <developer>
+            <name>Hendrik Dammers</name>
+            <email>hendrik.dammers@crowdcode.io</email>
+            <organization>Crowdcode GmbH + Co. KG</organization>
+            <organizationUrl>https://www.crowdcode.io</organizationUrl>
+        </developer>
+        <developer>
+            <name>Marcus Noerder-Tuitje</name>
+            <email>marcus.noerder-tuitje@crowdcode.io</email>
+            <organization>Crowdcode GmbH + Co. KG</organization>
+            <organizationUrl>https://www.crowdcode.io</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:https://dev.crowdcode.io/bitbucket/scm/hslb/lbds-sms-gateway</connection>
+        <developerConnection>scm:svn:https://dev.crowdcode.io/bitbucket/scm/scm/hslb/lbds-sms-gateway
+        </developerConnection>
+    </scm>
+
+    <distributionManagement>
+        <repository>
+            <id>repo.crowdcode.io</id>
+            <name>repo.crowdcode.io</name>
+            <url>https://repo.crowdcode.io/repository/releases/</url>
+        </repository>
+
+        <snapshotRepository>
+            <id>repo.crowdcode.io</id>
+            <name>repo.crowdcode.io</name>
+            <url>https://repo.crowdcode.io/repository/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 
     <dependencies>
         <dependency>
