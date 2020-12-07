@@ -20,12 +20,6 @@
 
     <developers>
         <developer>
-            <name>Heiko Beineke</name>
-            <email>heiko.beineke@crowdcode.io</email>
-            <organization>CROWDCODE GmbH + Co. KG</organization>
-            <organizationUrl>https://www.crowdcode.io</organizationUrl>
-        </developer>
-        <developer>
             <name>Hendrik Dammers</name>
             <email>hendrik.dammers@crowdcode.io</email>
             <organization>Crowdcode GmbH + Co. KG</organization>
@@ -34,6 +28,12 @@
         <developer>
             <name>Marcus Noerder-Tuitje</name>
             <email>marcus.noerder-tuitje@crowdcode.io</email>
+            <organization>Crowdcode GmbH + Co. KG</organization>
+            <organizationUrl>https://www.crowdcode.io</organizationUrl>
+        </developer>
+        <developer>
+            <name>Mashfuk Hossain</name>
+            <email>mashfuk.hossain@crowdcode.io</email>
             <organization>Crowdcode GmbH + Co. KG</organization>
             <organizationUrl>https://www.crowdcode.io</organizationUrl>
         </developer>
