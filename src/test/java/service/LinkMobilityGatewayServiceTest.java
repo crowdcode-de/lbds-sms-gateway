@@ -1,5 +1,6 @@
 package service;
 
+import model.LbdsSms;
 import org.apache.hc.core5.http.NameValuePair;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,8 +27,8 @@ class LinkMobilityGatewayServiceTest {
 
     @Test
     void sendSMS() throws URISyntaxException, IOException {
-        URI u=sgs.sendSMS("foo","bar","1234","5678","hello world");
-        assertNotNull(u);
+        LbdsSms lbdsSms = sgs.sendSMS("foo", "bar", "1234", "5678", "hello world");
+        assertNotNull(lbdsSms);
         //assertEquals("https://ham.http.api.linkmobility.de:7011/sendsms?user=foo&password=bar&from=1234&to=5678&body=hello+world",u.toString());
     }
 
@@ -37,8 +38,8 @@ class LinkMobilityGatewayServiceTest {
         request.setServerName("www.example.com");
         request.setRequestURI("/foo");
         request.setQueryString("user=foo&password=bar&from=1234&to=5678&body=hello+world");
-        List<NameValuePair> params=sgs.receiveSMSResponse(request);
-        assertNotNull(sgs);
+        List<LbdsSms> lbdsSms = sgs.receiveSMSResponse(request);
+        assertNotNull(lbdsSms);
     }
 
     @Test
@@ -46,8 +47,8 @@ class LinkMobilityGatewayServiceTest {
         MockHttpServletResponse response=  new MockHttpServletResponse();
         response.setStatus(200);
 
-        int status=sgs.getStatusCode(response);
-        assertEquals(200,status);
+        LbdsSms statusCode = sgs.getStatusCode(response);
+        assertEquals(200,statusCode.getReturnValue());
 
     }
 

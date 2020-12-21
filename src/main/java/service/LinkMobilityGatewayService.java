@@ -1,5 +1,6 @@
 package service;
 
+import model.LbdsSms;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
@@ -12,8 +13,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.*;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.List;
 
 public class LinkMobilityGatewayService implements LinkMobilityGatewayInterface {
@@ -21,7 +26,7 @@ public class LinkMobilityGatewayService implements LinkMobilityGatewayInterface 
     private final CloseableHttpClient httpClient = HttpClients.createDefault();
 
     @Override
-    public URI sendSMS(String user, String password, String from, String to, String body) throws URISyntaxException, IOException {
+    public LbdsSms sendSMS(String user, String password, String from, String to, String body) throws URISyntaxException, IOException {
         URI uri = new URIBuilder()
                 .setScheme("https")
                 //.setHost("ham.http.api.linkmobility.de:7011/sendsms")
@@ -57,28 +62,70 @@ public class LinkMobilityGatewayService implements LinkMobilityGatewayInterface 
             System.out.println("GET request not worked");
         }
 
-        return httpget.getUri();
+        return  new LbdsSms(httpget.getUri());
     }
 
     @Override
-    public List<NameValuePair> receiveSMSResponse(HttpServletRequest request) {
+    public LbdsSms sendSMS(LbdsSms smsToBeSend) throws URISyntaxException, IOException {
+        URI uri = new URIBuilder()
+                .setScheme("https")
+                //.setHost("ham.http.api.linkmobility.de:7011/sendsms")
+                .setHost("www.google.com")
+                .setParameter("user", smsToBeSend.getUser())
+                .setParameter("password", smsToBeSend.getPassword())
+                .setParameter("from", smsToBeSend.getFrom())
+                .setParameter("to",smsToBeSend.getTo())
+                .setParameter("body",smsToBeSend.getBody())
+                .build();
+        HttpGet httpget = new HttpGet(uri);
+        System.out.println(httpget.getUri());
 
-        List<NameValuePair> params = URLEncodedUtils.parse(request.getQueryString(), Charset.forName("UTF-8"));
+        URL obj = new URL(uri.toString());
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+        con.setRequestMethod("GET");
+        int responseCode = con.getResponseCode();
+        System.out.println("GET Response Code :: " + responseCode);
+        if (responseCode == HttpURLConnection.HTTP_OK) { // success
+            BufferedReader in = new BufferedReader(new InputStreamReader(
+                    con.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
 
-        for (NameValuePair param : params) {
-            System.out.println(param.getName() + " : " + param.getValue());
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+
+            // print result
+            //System.out.println(response.toString());
+        } else {
+            System.out.println("GET request not worked");
         }
 
-        return params;
+        return  new LbdsSms(httpget.getUri());
 
     }
 
     @Override
-    public int getStatusCode(HttpServletResponse response) {
+    public List<LbdsSms> receiveSMSResponse(HttpServletRequest request) {
+
+        List<NameValuePair> params = URLEncodedUtils.parse(request.getQueryString(), Charset.forName("UTF-8"));
+        List<LbdsSms> response = new ArrayList<>();
+        for (NameValuePair param : params) {
+            System.out.println(param.getName() + " : " + param.getValue());
+            //response.add(new LbdsSms("addResponseHere"));
+        }
+
+        return response;
+
+    }
+
+    @Override
+    public LbdsSms getStatusCode(HttpServletResponse response) {
         if(response!=null)
-        return response.getStatus();
+        return new LbdsSms(response.getStatus());
         else
-            return 0;
+            return new LbdsSms(0);
     }
 
 }
