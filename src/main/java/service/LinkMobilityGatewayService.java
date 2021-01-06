@@ -8,6 +8,7 @@ import org.apache.hc.core5.http.NameValuePair;
 import org.apache.hc.core5.net.URIBuilder;
 import org.apache.hc.core5.net.URLEncodedUtils;
 
+import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
@@ -27,10 +28,15 @@ public class LinkMobilityGatewayService implements LinkMobilityGatewayInterface 
 
     @Override
     public LbdsSms sendSMS(String user, String password, String from, String to, String body) throws URISyntaxException, IOException {
+        // TODO check this - it disables the certificate validation
+        HttpsURLConnection.setDefaultHostnameVerifier(WhitelistHostnameVerifier.INSTANCE);
+
         URI uri = new URIBuilder()
                 .setScheme("https")
                 //.setHost("ham.http.api.linkmobility.de:7011/sendsms")
-                .setHost("www.google.com")
+                .setHost("localhost")
+                .setPort(7011)
+                .setPath("/sendsms")
                 .setParameter("user", user)
                 .setParameter("password", password)
                 .setParameter("from", from)
