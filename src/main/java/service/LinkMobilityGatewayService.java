@@ -75,8 +75,8 @@ public class LinkMobilityGatewayService implements LinkMobilityGatewayInterface 
     public LbdsSms sendSMS(LbdsSms smsToBeSend) throws URISyntaxException, IOException {
         URI uri = new URIBuilder()
                 .setScheme("https")
-                //.setHost("ham.http.api.linkmobility.de:7011/sendsms")
-                .setHost("www.google.com")
+                .setHost("ham.http.api.linkmobility.de:7011/sendsms")
+                //.setHost("www.google.com")
                 .setParameter("user", smsToBeSend.getUser())
                 .setParameter("password", smsToBeSend.getPassword())
                 .setParameter("from", smsToBeSend.getFrom())
@@ -118,7 +118,7 @@ public class LinkMobilityGatewayService implements LinkMobilityGatewayInterface 
         List<NameValuePair> params = URLEncodedUtils.parse(request.getQueryString(), Charset.forName("UTF-8"));
         List<LbdsSms> response = new ArrayList<>();
         for (NameValuePair param : params) {
-            System.out.println(param.getName() + " : " + param.getValue());
+            log.info(param.getName() + " : " + param.getValue());
             //response.add(new LbdsSms("addResponseHere"));
         }
 
