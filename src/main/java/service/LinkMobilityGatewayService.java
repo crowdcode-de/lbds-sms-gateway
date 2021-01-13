@@ -1,6 +1,8 @@
 package service;
 
+import lombok.extern.slf4j.Slf4j;
 import model.LbdsSms;
+import model.LinkedMobilitySms;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClients;

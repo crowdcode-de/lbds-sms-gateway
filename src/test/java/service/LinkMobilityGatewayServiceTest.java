@@ -45,8 +45,8 @@ class LinkMobilityGatewayServiceTest {
         MockHttpServletResponse response = new MockHttpServletResponse();
         response.setStatus(200);
 
-        LbdsSms statusCode = sgs.getStatusCode(response);
-        assertEquals(200, statusCode.getReturnValue());
+        int statusCode = sgs.getStatusCode(response);
+        assertEquals(200, statusCode);
 
     }
 
