@@ -1,12 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.hzi.sormas.lbds</groupId>
     <artifactId>lbds-sms-gateway</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -20,12 +17,6 @@
 
     <developers>
         <developer>
-            <name>Heiko Beineke</name>
-            <email>heiko.beineke@crowdcode.io</email>
-            <organization>CROWDCODE GmbH + Co. KG</organization>
-            <organizationUrl>https://www.crowdcode.io</organizationUrl>
-        </developer>
-        <developer>
             <name>Hendrik Dammers</name>
             <email>hendrik.dammers@crowdcode.io</email>
             <organization>Crowdcode GmbH + Co. KG</organization>
@@ -34,6 +25,12 @@
         <developer>
             <name>Marcus Noerder-Tuitje</name>
             <email>marcus.noerder-tuitje@crowdcode.io</email>
+            <organization>Crowdcode GmbH + Co. KG</organization>
+            <organizationUrl>https://www.crowdcode.io</organizationUrl>
+        </developer>
+        <developer>
+            <name>Mashfuk Hossain</name>
+            <email>mashfuk.hossain@crowdcode.io</email>
             <organization>Crowdcode GmbH + Co. KG</organization>
             <organizationUrl>https://www.crowdcode.io</organizationUrl>
         </developer>
@@ -79,6 +76,55 @@
             <version>2.21.0</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents.core5</groupId>
+            <artifactId>httpcore5</artifactId>
+            <version>5.0.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents.client5</groupId>
+            <artifactId>httpclient5</artifactId>
+            <version>5.0.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-core</artifactId>
+            <version>9.0.37</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>5.2.8.RELEASE</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>r05</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>2.11.2</version>
+            <scope>compile</scope>
+        </dependency>
+
+
     </dependencies>
 
     <build>
@@ -100,6 +146,8 @@
                             <jdkToolchain>
                                 <version>${java.lang.level}</version>
                             </jdkToolchain>
+                            <source>${java.lang.level}</source>
+                            <target>${java.lang.level}</target>
                         </configuration>
                     </execution>
                 </executions>
