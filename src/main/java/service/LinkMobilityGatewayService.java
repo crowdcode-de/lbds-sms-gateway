@@ -19,6 +19,7 @@ import java.net.*;
 import java.nio.charset.Charset;
 import java.util.*;
 
+@Slf4j
 public class LinkMobilityGatewayService implements LinkMobilityGatewayInterface {
 
     private final CloseableHttpClient httpClient = HttpClients.createDefault();
@@ -124,12 +125,17 @@ public class LinkMobilityGatewayService implements LinkMobilityGatewayInterface 
     }
 
     @Override
-    public LbdsSms getStatusCode(HttpServletResponse response) {
-        if(response!=null)
-        return new LbdsSms(response.getStatus());
-        else
-            return new LbdsSms(0);
+    public int getStatusCode(HttpServletResponse response) {
+        return response != null ? response.getStatus() : 0;
     }
 
+    @Override
+    public LbdsSms mapLinkMobiltySmsToLbdsSms(LinkedMobilitySms linkedMobilitySms) {
+        return new LbdsSms()
+                .setBody(linkedMobilitySms.getBody())
+                .setFrom(linkedMobilitySms.getFrom())
+                .setId(linkedMobilitySms.getId())
+                .setTo(linkedMobilitySms.getTo());
+    }
 }
 
