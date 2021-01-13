@@ -7,7 +7,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.lang.level>11</java.lang.level>
+        <java.lang.level>8</java.lang.level>
     </properties>
 
     <organization>
@@ -146,8 +146,8 @@
                             <jdkToolchain>
                                 <version>${java.lang.level}</version>
                             </jdkToolchain>
-                            <source>11</source>
-                            <target>11</target>
+                            <source>${java.lang.level}</source>
+                            <target>${java.lang.level}</target>
                         </configuration>
                     </execution>
                 </executions>
