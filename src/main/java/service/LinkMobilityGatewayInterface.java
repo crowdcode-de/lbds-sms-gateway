@@ -1,6 +1,7 @@
 package service;
 
 import model.LbdsSms;
+import model.LinkedMobilitySms;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,5 +17,7 @@ public interface LinkMobilityGatewayInterface {
 
     List<LbdsSms> receiveSMSResponse(HttpServletRequest request);
 
-    LbdsSms getStatusCode(HttpServletResponse response);
+    int getStatusCode(HttpServletResponse response);
+
+    LbdsSms mapLinkMobiltySmsToLbdsSms(LinkedMobilitySms linkedMobilitySms);
 }

@@ -8,29 +8,33 @@ import org.apache.hc.core5.http.NameValuePair;
 import org.apache.hc.core5.net.URIBuilder;
 import org.apache.hc.core5.net.URLEncodedUtils;
 
+import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
+import java.io.UnsupportedEncodingException;
+import java.net.*;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
+@Slf4j
 public class LinkMobilityGatewayService implements LinkMobilityGatewayInterface {
 
     private final CloseableHttpClient httpClient = HttpClients.createDefault();
 
     @Override
     public LbdsSms sendSMS(String user, String password, String from, String to, String body) throws URISyntaxException, IOException {
+        // TODO check this - it disables the certificate validation
+        HttpsURLConnection.setDefaultHostnameVerifier(WhitelistHostnameVerifier.INSTANCE);
+
         URI uri = new URIBuilder()
                 .setScheme("https")
                 //.setHost("ham.http.api.linkmobility.de:7011/sendsms")
-                .setHost("www.google.com")
+                .setHost("localhost")
+                .setPort(7011)
+                .setPath("/sendsms")
                 .setParameter("user", user)
                 .setParameter("password", password)
                 .setParameter("from", from)
@@ -69,8 +73,8 @@ public class LinkMobilityGatewayService implements LinkMobilityGatewayInterface 
     public LbdsSms sendSMS(LbdsSms smsToBeSend) throws URISyntaxException, IOException {
         URI uri = new URIBuilder()
                 .setScheme("https")
-                //.setHost("ham.http.api.linkmobility.de:7011/sendsms")
-                .setHost("www.google.com")
+                .setHost("ham.http.api.linkmobility.de:7011/sendsms")
+                //.setHost("www.google.com")
                 .setParameter("user", smsToBeSend.getUser())
                 .setParameter("password", smsToBeSend.getPassword())
                 .setParameter("from", smsToBeSend.getFrom())
@@ -112,7 +116,7 @@ public class LinkMobilityGatewayService implements LinkMobilityGatewayInterface 
         List<NameValuePair> params = URLEncodedUtils.parse(request.getQueryString(), Charset.forName("UTF-8"));
         List<LbdsSms> response = new ArrayList<>();
         for (NameValuePair param : params) {
-            System.out.println(param.getName() + " : " + param.getValue());
+            log.info(param.getName() + " : " + param.getValue());
             //response.add(new LbdsSms("addResponseHere"));
         }
 
@@ -121,12 +125,17 @@ public class LinkMobilityGatewayService implements LinkMobilityGatewayInterface 
     }
 
     @Override
-    public LbdsSms getStatusCode(HttpServletResponse response) {
-        if(response!=null)
-        return new LbdsSms(response.getStatus());
-        else
-            return new LbdsSms(0);
+    public int getStatusCode(HttpServletResponse response) {
+        return response != null ? response.getStatus() : 0;
     }
 
+    @Override
+    public LbdsSms mapLinkMobiltySmsToLbdsSms(LinkedMobilitySms linkedMobilitySms) {
+        return new LbdsSms()
+                .setBody(linkedMobilitySms.getBody())
+                .setFrom(linkedMobilitySms.getFrom())
+                .setId(linkedMobilitySms.getId())
+                .setTo(linkedMobilitySms.getTo());
+    }
 }
 
