@@ -1,5 +1,6 @@
 package service;
 
+import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import model.LbdsSms;
 import model.LinkedMobilitySms;
@@ -34,7 +35,7 @@ public class LinkMobilityGatewayService implements LinkMobilityGatewayInterface 
         URI uri = new URIBuilder()
                 .setScheme("https")
                 //.setHost("ham.http.api.linkmobility.de:7011/sendsms")
-                .setHost("localhost")
+                .setHost("ham.http.api.linkmobility.de")
                 .setPort(7011)
                 .setPath("/sendsms")
                 .setParameter("user", user)
