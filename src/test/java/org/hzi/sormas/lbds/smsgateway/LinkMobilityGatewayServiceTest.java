@@ -1,6 +1,7 @@
-package service;
+package org.hzi.sormas.lbds.smsgateway;
 
-import model.LbdsSms;
+import org.hzi.sormas.lbds.smsgateway.linkmobility.LinkMobilityGatewayService;
+import org.hzi.sormas.lbds.smsgateway.model.LbdsSms;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockitoAnnotations;
