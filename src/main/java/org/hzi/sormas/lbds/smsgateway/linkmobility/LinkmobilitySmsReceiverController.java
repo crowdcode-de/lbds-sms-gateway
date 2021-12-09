@@ -3,14 +3,13 @@ package org.hzi.sormas.lbds.smsgateway.linkmobility;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hzi.sormas.lbds.smsgateway.LbdsMessageAcceptor;
 import org.hzi.sormas.lbds.smsgateway.model.LbdsSms;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.hzi.sormas.lbds.smsgateway.LbdsMessageAcceptor;
 
 import java.io.IOException;
 
@@ -18,7 +17,6 @@ import java.io.IOException;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@Profile({"link-mobility"})
 public class LinkmobilitySmsReceiverController {
 
     private final LbdsMessageAcceptor lbdsMessageAcceptor;

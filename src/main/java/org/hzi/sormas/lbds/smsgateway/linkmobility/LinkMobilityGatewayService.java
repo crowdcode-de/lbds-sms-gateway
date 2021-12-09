@@ -1,29 +1,26 @@
 package org.hzi.sormas.lbds.smsgateway.linkmobility;
 
 import lombok.extern.slf4j.Slf4j;
-import org.hzi.sormas.lbds.smsgateway.SmsGatewayInterface;
-import org.hzi.sormas.lbds.smsgateway.model.LbdsSms;
 import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
-import org.apache.hc.core5.http.NameValuePair;
 import org.apache.hc.core5.net.URIBuilder;
-import org.apache.hc.core5.net.URLEncodedUtils;
-import org.springframework.context.annotation.Profile;
+import org.hzi.sormas.lbds.smsgateway.SmsGatewayInterface;
 import org.hzi.sormas.lbds.smsgateway.WhitelistHostnameVerifier;
+import org.hzi.sormas.lbds.smsgateway.model.LbdsSms;
+import org.springframework.stereotype.Service;
 
 import javax.net.ssl.HttpsURLConnection;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.*;
-import java.nio.charset.Charset;
-import java.util.*;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 
+@Service
 @Slf4j
-@Profile("link-mobility")
 public class LinkMobilityGatewayService implements SmsGatewayInterface {
 
     private final CloseableHttpClient httpClient = HttpClients.createDefault();
@@ -44,51 +41,28 @@ public class LinkMobilityGatewayService implements SmsGatewayInterface {
                 .setParameter("body",body)
                 .build();
         HttpGet httpget = new HttpGet(uri);
-        System.out.println(httpget.getUri());
+        log.debug(String.valueOf(httpget.getUri()));
 
         URL obj = new URL(uri.toString());
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
         con.setRequestMethod("GET");
         int responseCode = con.getResponseCode();
-        System.out.println("GET Response Code :: " + responseCode);
+        log.debug("GET Response Code :: " + responseCode);
         if (responseCode == HttpURLConnection.HTTP_OK) { // success
-            BufferedReader in = new BufferedReader(new InputStreamReader(
-                    con.getInputStream()));
-            String inputLine;
-            StringBuffer response = new StringBuffer();
+            try(BufferedReader in = new BufferedReader(new InputStreamReader(
+                    con.getInputStream()))) {
+                String inputLine;
+                StringBuffer response = new StringBuffer();
 
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
+                while ((inputLine = in.readLine()) != null) {
+                    response.append(inputLine);
+                }
             }
-            in.close();
-
-            // print result
-            //System.out.println(response.toString());
         } else {
-            System.out.println("GET request not worked");
+            log.debug("GET request not worked");
         }
 
-        return  new LbdsSms(httpget.getUri());
-    }
-
-
-    @Override
-    public List<LbdsSms> receiveSMSResponse(HttpServletRequest request) {
-
-        List<NameValuePair> params = URLEncodedUtils.parse(request.getQueryString(), Charset.forName("UTF-8"));
-        List<LbdsSms> response = new ArrayList<>();
-        for (NameValuePair param : params) {
-            log.info(param.getName() + " : " + param.getValue());
-            //response.add(new LbdsSms("addResponseHere"));
-        }
-
-        return response;
-
-    }
-
-    @Override
-    public int getStatusCode(HttpServletResponse response) {
-        return response != null ? response.getStatus() : 0;
+        return new LbdsSms(httpget.getUri());
     }
 
     public LbdsSms mapLinkMobiltySmsToLbdsSms(LinkedMobilitySms linkedMobilitySms) {
