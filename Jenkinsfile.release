@@ -6,7 +6,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 withCredentials(
-                        [usernamePassword(credentialsId: 'crowdcodeBitbucketNew',
+                        [usernamePassword(credentialsId: 'gorefest',
                                 usernameVariable: 'gitUser',
                                 passwordVariable: 'gitPwd'
                         )]) {
