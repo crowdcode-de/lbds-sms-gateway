@@ -1,4 +1,4 @@
-package model;
+package org.hzi.sormas.lbds.smsgateway.model;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

@@ -1,7 +1,5 @@
-package model;
+package org.hzi.sormas.lbds.smsgateway.linkmobility;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.net.URI;

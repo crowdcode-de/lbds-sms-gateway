@@ -1,0 +1,1 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=org.hzi.sormas.lbds.smsgateway.linkmobility.LinkMobilityConfig
