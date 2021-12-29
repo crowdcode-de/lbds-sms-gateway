@@ -35,9 +35,11 @@ public class LinkmobilitySmsReceiverController {
             LbdsSms lbdsSms = linkMobilityGatewayService.mapLinkMobiltySmsToLbdsSms(linkedMobilitySms);
 
             lbdsMessageAcceptor.acceptMessage(lbdsSms);
-            //         FIXME implement logging for notification (DONE) and think about what kind of task have to be done.
+            log.debug("SUCCESSFULLY PROCESSED | "+linkedMobilitySms.getBody() + " " + linkedMobilitySms.getFrom() + " " + linkedMobilitySms.getTo());
+
         } catch (Exception e) {
-            // TODO FAIL
+            log.error("FAILED TO PROCESS | "+linkedMobilitySms.getBody() + " " + linkedMobilitySms.getFrom() + " " + linkedMobilitySms.getTo());
+            return ResponseEntity.internalServerError().build();
         }
         return ResponseEntity.ok().build();
     }
