@@ -31,7 +31,7 @@ public class LinkMobilityGatewayService implements SmsGatewayInterface {
 
         URI uri = new URIBuilder()
                 .setScheme("https")
-                .setHost("ham.http.api.org.hzi.sormas.lbds.smsgateway.linkmobility.service.linkmobility.de")
+                .setHost("ham.http.api.linkmobility.de")
                 .setPort(7011)
                 .setPath("/sendsms")
                 .setParameter("user", user)
